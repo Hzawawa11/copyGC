@@ -10,12 +10,14 @@
   }
 
 Object* cons(Object* car, Object* cdr){
-  
   // CHECK(car); CHECK(cdr);
-  Object* obj = allocate();
+  push_local(cdr);
+
+  Object* obj = allocate();  
   _TYPE(obj) = T_PTR;
   _FORWADING(obj) = 0x00;
   car(obj) = car;
+  cdr = pop_local();
   cdr(obj) = cdr;
   return obj;
 }

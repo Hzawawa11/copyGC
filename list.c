@@ -12,6 +12,8 @@ Object* ListMake(int n){
     return NULL;
   for(i = 1; i <= n; i++){
     lead = cons(NULL, lead);
+    // pop_local();
+    // push_local(lead);
   }
   return lead;
 }
@@ -41,7 +43,7 @@ Object* ListDelete(int n, Object* obj){
     if(cdr(cdr(obj)) == NULL) 
       cdr(obj) = NULL;
     else 
-      cdr(cdr(obj)) = NULL;
+      cdr(obj) = cdr(cdr(obj));
   }else{
     if(cdr(cdr(obj)) == NULL) return obj;
     ListDelete(--n, cdr(obj));

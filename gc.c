@@ -33,6 +33,7 @@ Object* allocate(void){
   Object* result = freeptr;
   Object* newfree = (u_int64_t)freeptr+(PAIRSIZE);
   if (newfree > top){
+    printf("\n StartCopy GC\n");
     gc();
     result = freeptr;
     newfree = (u_int64_t)freeptr+(PAIRSIZE);
@@ -62,6 +63,7 @@ void gc(void){
   RootScan();
   while( !isEMPTY() ){
     Object* p = pop_gcs();
+    // printf("!! %p\n", p);
     scan(p);
   }
 }
@@ -76,7 +78,11 @@ void RootScan(void){
   }
   
   for(i = 0; i < STACKSIZE; i++){
-    if (local[i] != NULL) push_gcs(local[i]); 
+    if (local[i] != NULL){
+      // printf("!! %p\n", local[i]);
+      local[i] = forward(local[i]);
+      // push_gcs(local[i]); 
+    }
   }
   
 }
@@ -96,9 +102,11 @@ void scan(Object* obj){
 
 
 Object* forward(Object* fromRef){
-  Object* toRef = _FORWADING(fromRef); //OK
+  Object* toRef = _FORWADING(fromRef);
+  // printf("end %p -> %p\n", fromRef, toRef);
   if (toRef == NULL){
-    toRef = copy(fromRef); //OK
+    // printf("end %p -> %p\n", fromRef, toRef);
+    toRef = copy(fromRef);
   }
   return toRef;
 }
@@ -155,7 +163,6 @@ void init_gcs(void){
 
 int push_gcs(Object* obj){
   if (sp < STACKSIZE){
-    // _MARK(obj) = TRUE;
     gcs[sp] = obj;
     sp++;
     return TRUE;
