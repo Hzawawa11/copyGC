@@ -4,16 +4,29 @@
 #include "basic.h"
 
 #define EMPTY_LIST(list) (list == NULL)
-#define CHECK(o) \
-  if(_TYPE(o) != T_INT && _TYPE(o) != T_PTR){\
-    puts("Error: 1");exit(0);\
-  }
+
+Object* allocate(u_int64_t size){
+  Object* result = freeptr;
+  Object* newfree = (u_int64_t)freeptr+(size);
+  if (newfree > top){
+    printf("\n StartCopy GC\n");
+    gc();
+    result = freeptr;
+    newfree = (u_int64_t)freeptr+(size);
+    if (newfree > top){
+      printf("Error: 2\n");
+      exit(0);
+    }
+  }    
+  freeptr = newfree;
+  printf("allocate: %p\n", result);
+  return result;
+}
 
 Object* cons(Object* car, Object* cdr){
-  // CHECK(car); CHECK(cdr);
   push_local(cdr);
 
-  Object* obj = allocate();  
+  Object* obj = allocate(PAIRSIZE);  
   _TYPE(obj) = T_PTR;
   _FORWADING(obj) = 0x00;
   car(obj) = car;
@@ -23,7 +36,7 @@ Object* cons(Object* car, Object* cdr){
 }
 
 Object* atom(int i){
-  Object* obj = allocate();
+  Object* obj = allocate(DINTSIZE);
   _FORWADING(obj) = 0x00;
   _TYPE(obj) = T_INT;
   _DINT(obj) = i;

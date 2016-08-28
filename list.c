@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "structure.h"
+#include "list.h"
 #include "basic.h"
 
 #define ListError(n) (n < 1)
@@ -19,21 +20,50 @@ Object* ListMake(int n){
 }
 
 // #define isNEXT() 
+void disp(Object* list){
+  /* car phase */
+  if(car(list) == NULL){
+    printf("'()");
+  }else if(_TYPE(car(list)) == T_PTR){
+    ListDisp(list);
+  }
+
+
+  /*cdr phase*/
+  if(cdr(list) == NULL){
+    printf(" . ");
+    printf("'()");
+  }
+  else if(_TYPE(cdr(list)) == T_PTR){
+    // printf("%d", cdr(list));
+    printf(" ");
+    disp(cdr(list));    
+  }
+}
+
 void ListDisp(Object* list){
+  if(_TYPE(list) == NULL){
+    goto end;
+  }
+  printf("(");
+  disp(list);
+  printf(")\n");
+
+  /*
   if(list == NULL){
     printf("NIL\n");
     goto end;
   }
   if (_TYPE(list) == T_PTR){
     if(cdr(list) != NULL){
-      printf("|-|%p|-->", cdr(list));
+      printf("(- . %p)", cdr(list));
       ListDisp(cdr(list));
     }
     else{
-      printf("|-|-|\n");
+      printf("(- . -)\n");
     }
-  }
-  end: ;
+  }*/
+  end: ; 
 }
 
 Object* ListDelete(int n, Object* obj){

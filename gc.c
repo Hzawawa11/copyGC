@@ -9,7 +9,6 @@ Object* Heap;
 Object* top;
 Object* freeptr;
 Object* R[RN];
-
 Object* gcs[STACKSIZE];
 int sp;
 Object* local[STACKSIZE];
@@ -25,26 +24,8 @@ void init_Semispaces(void){
   fromSpace = (u_int64_t)toSpace+(EXTENT*PAIRSIZE);
   top = fromSpace;
   freeptr = toSpace; 
-  state_Obj(STR(toSpace), toSpace);
-  state_Obj(STR(fromSpace), fromSpace);
-}
-
-Object* allocate(void){
-  Object* result = freeptr;
-  Object* newfree = (u_int64_t)freeptr+(PAIRSIZE);
-  if (newfree > top){
-    printf("\n StartCopy GC\n");
-    gc();
-    result = freeptr;
-    newfree = (u_int64_t)freeptr+(PAIRSIZE);
-    if (newfree > top){
-      printf("Error: 2\n");
-      exit(0);
-    }
-  }    
-  freeptr = newfree;
-  printf("allocate: %p\n", result);
-  return result;
+  // state_Obj(STR(toSpace), toSpace);
+  // state_Obj(STR(fromSpace), fromSpace);
 }
 
 void flip(void){

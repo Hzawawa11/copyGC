@@ -6,6 +6,7 @@
 #define LIST_H
 /* Function Prototype */
   Object* ListMake(int n);
+  void disp(Object* list);
   void ListDisp(Object* list);
   Object* ListDelete(int n, Object* obj);
   Object* ListInsert(int n, Object* list, Object* obj);

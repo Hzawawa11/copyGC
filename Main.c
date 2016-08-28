@@ -16,7 +16,7 @@ int main(void){
 
   init_Semispaces();
   Heaptable();
-
+  
   R[0] = ListMake(3);
   ListDisp(R[0]);
   R[1] = ListMake(5);

@@ -37,6 +37,8 @@ typedef struct mark_O{
 
 #define PAIRSIZE (sizeof(Object)+sizeof(Object)+sizeof(Object)+sizeof(char))
 
+#define DINTSIZE (sizeof(Object)+sizeof(Object)+sizeof(char))
+
 #define RN 10
 #define STACKSIZE 100
 #define FREESIZE 30

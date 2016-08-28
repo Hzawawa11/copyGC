@@ -31,7 +31,7 @@ int push_local(Object* obj);
 Object* pop_local(void);
 
 void init_Semispaces(void);
-Object* allocate(void);
+Object* allocate(u_int64_t size);
 
 /*state.c*/
 void state_Obj(char* str, Object* obj);

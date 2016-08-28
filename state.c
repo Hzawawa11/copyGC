@@ -50,11 +50,11 @@ void state_Obj(char* str, Object* obj)
 
 void Heaptable(void){
   int i = 1;
-  printf("freeptr %p\n", freeptr);
-  printf("top     %p\n", top);
+  // printf("freeptr %p\n", freeptr);
+  // printf("top     %p\n", top);
   Object* tmp_to = (u_int64_t)toSpace;  
   Object* tmp_from = (u_int64_t)fromSpace;  
-  printf("%3d %18s |%18s\n", 0, "toSpace", "fromSpace");
+  printf("    %18s |%18s\n", "toSpace", "fromSpace");
   while (tmp_to < top){
     printf("%3d %18p |%18p\n", i, tmp_to, tmp_from);
     tmp_to = (u_int64_t)tmp_to+(PAIRSIZE) ;
