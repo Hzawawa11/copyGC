@@ -15,8 +15,11 @@ $(TARGET):$(OBJS)
 debug:
 	$(CC) -o $(TARGET)  -g $(SRCS) $(LDFLAGS) -O0
 
+drun:
+	lldb -f $(TARGET)
+
 run:
 	./$(TARGET)
 
 clean:
-	rm -f $(OBJS) $(TARGET) *.o *.d
+	rm -rf $(OBJS) $(TARGET) *.o *.d *.dSYM

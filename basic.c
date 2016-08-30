@@ -9,7 +9,6 @@ Object* allocate(u_int64_t size){
   Object* result = freeptr;
   Object* newfree = (u_int64_t)freeptr+(size);
   if (newfree > top){
-    printf("\n StartCopy GC\n");
     gc();
     result = freeptr;
     newfree = (u_int64_t)freeptr+(size);
@@ -19,7 +18,8 @@ Object* allocate(u_int64_t size){
     }
   }    
   freeptr = newfree;
-  printf("allocate: %p\n", result);
+  // printf("allocate: %p\n", result);
+  // printf("nextallocate: %p\n", freeptr);
   return result;
 }
 

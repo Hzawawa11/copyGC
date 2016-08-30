@@ -19,20 +19,19 @@ int local_sp;
 
 void init_Semispaces(void){
   // Heap = (Object*)malloc(2*EXTENT * PAIRSIZE * sizeof(char));
-  Heap = (Object*)malloc(PAIRSIZE);
+  Heap = (Object*)malloc(HEAPSIZE);
+  // Heap = (Object*)malloc(PAIRSIZE);
   toSpace = Heap;
-  fromSpace = (u_int64_t)toSpace+(EXTENT*PAIRSIZE);
+  fromSpace = (u_int64_t)toSpace+(EXTENT);
   top = fromSpace;
   freeptr = toSpace; 
-  // state_Obj(STR(toSpace), toSpace);
-  // state_Obj(STR(fromSpace), fromSpace);
 }
 
 void flip(void){
   Object* tmp = toSpace; 
   toSpace = fromSpace; 
   fromSpace = tmp; 
-  top = (u_int64_t)toSpace+(EXTENT*PAIRSIZE);
+  top = (u_int64_t)toSpace+(EXTENT);
   freeptr = toSpace;
 }
 
@@ -96,7 +95,7 @@ Object* copy(Object* fromRef){
   Object* toRef = freeptr;
   freeptr = (u_int64_t)freeptr+(PAIRSIZE);
   move(fromRef, toRef);
-  printf("%p  -->  %p\n", fromRef, toRef);
+  // printf("%p  -->  %p\n", fromRef, toRef);
   _FORWADING(fromRef) = toRef;
   push_gcs(toRef);
   return toRef;

@@ -36,4 +36,5 @@ Object* allocate(u_int64_t size);
 /*state.c*/
 void state_Obj(char* str, Object* obj);
 void Heaptable(void);
+
 #endif
